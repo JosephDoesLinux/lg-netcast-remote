@@ -68,7 +68,13 @@ Some things these TVs simply don't allow over the network. Clicker says so rathe
 
 ## Download
 
-There are no releases yet. Build it from source as described below.
+Get the latest from **[Releases](https://github.com/JosephDoesLinux/lg-netcast-remote/releases/latest)**:
+
+- **Android** (13 and later): `Clicker-for-NetCast-<version>.apk`. Open it on your phone, and allow installs from your browser or file manager when Android asks.
+- **Linux** (x86_64): `Clicker-for-NetCast-<version>-x86_64.AppImage`. Make it executable (`chmod +x`, or the Permissions tab in your file manager), then run it. It adds itself to your app menu with its icon, wherever you keep the file. You can turn that off in Settings › Look. If it won't start, install FUSE (`fuse3`) or run it with `--appimage-extract-and-run`.
+- **Windows and macOS**: no packages yet. Build from source below.
+
+Each release lists SHA-256 checksums in `SHA256SUMS.txt`.
 
 ## Build from source
 
@@ -82,7 +88,15 @@ You need **JDK 21**. For the Android app you also need the **Android SDK with pl
 ./gradlew :desktop:run
 
 # Desktop: a package for the OS you're on
-./gradlew :desktop:packageDeb          # or packageRpm, packageAppImage, packageDmg, packageMsi
+./gradlew :desktop:packageDeb          # or packageRpm, packageDmg, packageMsi
+
+# Linux AppImage in desktop/build/ (downloads appimagetool once)
+desktop/appimage/build.sh
+
+# Signed, shrunk Android release. Point Gradle at a properties file with storeFile, storePassword,
+# keyAlias, and keyPassword, by adding clicker.signing=/path/to/signing.properties to ~/.gradle/gradle.properties.
+# Without it, the release APK is built unsigned.
+./gradlew :app:assembleRelease
 
 # Protocol tests
 ./gradlew :protocol:test

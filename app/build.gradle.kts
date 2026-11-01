@@ -1,8 +1,18 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
+
+// Release signing reads a properties file kept outside the repo (storeFile, storePassword, keyAlias, keyPassword),
+// named by the `clicker.signing` Gradle property, usually set in ~/.gradle/gradle.properties.
+// Without it, release builds come out unsigned and debug builds are unaffected.
+val releaseSigning = providers.gradleProperty("clicker.signing").orNull
+    ?.let(::file)
+    ?.takeIf { it.exists() }
+    ?.let { source -> Properties().apply { source.inputStream().use { load(it) } } }
 
 android {
     namespace = "dev.netcastremote"
@@ -17,9 +27,24 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (releaseSigning != null) {
+            create("release") {
+                storeFile = file(releaseSigning.getProperty("storeFile"))
+                storePassword = releaseSigning.getProperty("storePassword")
+                keyAlias = releaseSigning.getProperty("keyAlias")
+                keyPassword = releaseSigning.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8 takes the APK from about 70 MB to a few, mostly by dropping unused Material icons.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            if (releaseSigning != null) signingConfig = signingConfigs.getByName("release")
         }
     }
 

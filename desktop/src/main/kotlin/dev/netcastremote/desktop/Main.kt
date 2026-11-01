@@ -32,11 +32,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.awt.Dimension
 
-fun main() = application {
+fun main() {
+    val platform = DesktopPlatform()
+    // Before any window opens: the window's class name, and the menu entry the dock matches it to.
+    LinuxIntegration.nameWindows()
+    LinuxIntegration.sync(runBlocking { platform.load() }.settings.appMenuEntry)
+    app(platform)
+}
+
+private fun app(platform: DesktopPlatform) = application {
     val scope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
-    val repo = remember { TvRepository(DesktopPlatform(), scope).also { it.start() } }
+    val repo = remember { TvRepository(platform, scope).also { it.start() } }
     val state by repo.state.collectAsState()
     val windowState = rememberWindowState(size = DpSize(1180.dp, 820.dp), position = WindowPosition(Alignment.Center))
     val keys = remember { KeyShortcuts(repo) }

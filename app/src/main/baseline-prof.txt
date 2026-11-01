@@ -1,5 +1,11 @@
-HSPLdev/netcastremote/MainActivity;
-HSPLdev/netcastremote/NetCastApp;
-HSPLdev/netcastremote/ui/ScreensKt;
-HSPLdev/netcastremote/session/TvRepository;
-PLdev/netcastremote/session/NetCastService;
+Ldev/netcastremote/MainActivity;
+HSPLdev/netcastremote/MainActivity;->**(**)**
+Ldev/netcastremote/NetCastApp;
+HSPLdev/netcastremote/NetCastApp;->**(**)**
+Ldev/netcastremote/session/TvRepository;
+HSPLdev/netcastremote/session/TvRepository;->**(**)**
+Ldev/netcastremote/ui/RootKt;
+HSPLdev/netcastremote/ui/RootKt;->**(**)**
+Ldev/netcastremote/ui/RemoteKt;
+HSPLdev/netcastremote/ui/RemoteKt;->**(**)**
+PLdev/netcastremote/session/NetCastService;->**(**)**

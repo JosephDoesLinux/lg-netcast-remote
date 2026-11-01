@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Clicker for NetCast
+GenericName=TV Remote
+Comment=The modern remote for LG NetCast smart TVs
+Exec=clicker-for-netcast
+Icon=clicker-for-netcast
+Categories=AudioVideo;Video;TV;
+Keywords=LG;NetCast;TV;remote;
+Terminal=false
+StartupWMClass=clicker-for-netcast

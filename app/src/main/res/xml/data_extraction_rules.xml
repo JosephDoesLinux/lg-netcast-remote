@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Only saved settings, TVs, and favorites move with backups and device transfers. Caches are never included. -->
 <data-extraction-rules>
     <cloud-backup>
         <include domain="file" path="datastore/" />
-        <exclude domain="cache" path="." />
     </cloud-backup>
     <device-transfer>
         <include domain="file" path="datastore/" />
-        <exclude domain="cache" path="." />
     </device-transfer>
 </data-extraction-rules>

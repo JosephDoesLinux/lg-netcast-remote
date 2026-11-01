@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Only saved settings, TVs, and favorites are backed up. Caches and the widget snapshot are left out by omission. -->
 <full-backup-content>
     <include domain="file" path="datastore/" />
-    <exclude domain="file" path="widget-snap.json" />
-    <exclude domain="cache" path="." />
 </full-backup-content>

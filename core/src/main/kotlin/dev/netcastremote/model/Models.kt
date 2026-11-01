@@ -47,6 +47,8 @@ data class Settings(
     val onboarded: Boolean = false,
     /** "system", "light", or "dark". Android follows the system; the desktop app offers the choice. */
     val theme: String = "system",
+    /** Linux AppImage only: keep a menu entry and icon under ~/.local/share so docks show the right icon. */
+    val appMenuEntry: Boolean = true,
 )
 
 @Serializable

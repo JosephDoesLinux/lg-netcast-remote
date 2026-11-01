@@ -23,7 +23,11 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "dev.netcastremote.desktop.MainKt"
+        // Lets the app name its windows (WM_CLASS) so Linux docks match them to the menu entry and icon.
+        jvmArgs += listOf("--add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED")
         nativeDistributions {
+            // The bundled runtime is trimmed to the modules the app uses; these two come from `suggestRuntimeModules`.
+            modules("java.instrument", "jdk.unsupported")
             targetFormats(TargetFormat.Deb, TargetFormat.Rpm, TargetFormat.AppImage, TargetFormat.Dmg, TargetFormat.Msi)
             packageName = "clicker-for-netcast"
             packageVersion = "1.0.0"

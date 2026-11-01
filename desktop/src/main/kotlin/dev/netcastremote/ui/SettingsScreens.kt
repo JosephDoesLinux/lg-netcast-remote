@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Keyboard
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.VerticalAlignBottom
@@ -104,6 +105,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import dev.netcastremote.desktop.LinuxIntegration
 import dev.netcastremote.model.AppInfo
 import dev.netcastremote.model.Screen
 import dev.netcastremote.model.UiState
@@ -150,6 +152,12 @@ fun SettingsPane(repo: TvRepository, state: UiState, modifier: Modifier = Modifi
         }
         SegmentedGroup("Look") {
             actionRow("Theme", Icons.Rounded.Palette, themeLabel(settings.theme)) { dialog = "theme" }
+            if (LinuxIntegration.available) {
+                switchRow("Show in the app menu", settings.appMenuEntry, Icons.Rounded.Apps, "Adds Clicker and its icon to your app menu and dock, wherever this AppImage lives") {
+                    LinuxIntegration.sync(it)
+                    repo.updateSettings { copy(appMenuEntry = it) }
+                }
+            }
         }
         SegmentedGroup("Touchpad") {
             sliderRow("Pointer speed", settings.pointerSensitivity, 0.4f..2.2f, label = "${(settings.pointerSensitivity * 100).roundToInt()}%", icon = Icons.Rounded.Speed) {
