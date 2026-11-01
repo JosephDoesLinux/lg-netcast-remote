@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="remote"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/shortcut_remote">
+        <intent
+            android:action="dev.netcastremote.SHORTCUT_REMOTE"
+            android:targetPackage="dev.netcastremote"
+            android:targetClass="dev.netcastremote.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="pointer"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/shortcut_pointer">
+        <intent
+            android:action="dev.netcastremote.SHORTCUT_POINTER"
+            android:targetPackage="dev.netcastremote"
+            android:targetClass="dev.netcastremote.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="power"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/shortcut_power">
+        <intent
+            android:action="dev.netcastremote.action.COMMAND"
+            android:targetPackage="dev.netcastremote"
+            android:targetClass="dev.netcastremote.MainActivity">
+            <extra android:name="command" android:value="power" />
+        </intent>
+    </shortcut>
+</shortcuts>

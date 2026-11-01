@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appfunctions>
+    <appfunction name="power" description="Turn the paired LG NetCast television on or off. Turning on uses Wake-on-LAN and needs the TV's MAC address saved in the app." />
+    <appfunction name="mute" description="Mute or unmute the paired LG NetCast television." />
+    <appfunction name="setVolume" description="Move the television volume toward a level from 0 to 100 by repeating the volume keys." />
+    <appfunction name="channelUp" description="Change to the next channel on the paired television." />
+    <appfunction name="channelDown" description="Change to the previous channel on the paired television." />
+    <appfunction name="tune" description="Tune the television to a channel number such as 11-1 or a channel name." />
+    <appfunction name="launchApp" description="Launch an application installed on the television by name." />
+    <appfunction name="runMacro" description="Run a named macro such as Movie on the paired television." />
+</appfunctions>

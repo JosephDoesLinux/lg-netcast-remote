@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>NetCast sidecar</title>
+<script type="text/javascript">
+var bridge = null;
+
+function boot() {
+    bridge = document.getElementById("bridge");
+    if (!bridge) return;
+    bridge.onreceivemessage = function (addr, msgType, msg) {
+        if (msgType === "ping") {
+            bridge.sendMessage("pong", JSON.stringify({
+                input: "unknown",
+                position: 0,
+                note: "UDAP cannot report input or playback position. This sidecar is the research path."
+            }));
+        }
+    };
+}
+
+function announce() {
+    if (bridge) bridge.sendMessage("ready", "sidecar");
+}
+</script>
+</head>
+<body onload="boot(); announce();">
+<object id="bridge" type="application/x-netcast-apptoapp" width="0" height="0"></object>
+</body>
+</html>

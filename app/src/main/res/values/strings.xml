@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clicker for NetCast</string>
+    <string name="volume_up">Volume up</string>
+    <string name="volume_down">Volume down</string>
+    <string name="mute">Mute</string>
+    <string name="asleep">Off</string>
+    <string name="starting_soon">Starting soon</string>
+    <string name="widget_now">What\'s on</string>
+    <string name="widget_transport">Volume and channels</string>
+    <string name="widget_channels">Favorite channels</string>
+    <string name="widget_apps">Favorite TV apps</string>
+    <string name="widget_preview">TV screen</string>
+    <string name="shortcut_remote">Remote</string>
+    <string name="shortcut_pointer">Touchpad</string>
+    <string name="shortcut_power">Power</string>
+</resources>

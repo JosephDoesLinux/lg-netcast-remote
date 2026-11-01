@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A pill-shaped remote: D-pad with a warm OK key, and two buttons. Kept inside the 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#F4F2FF"
+        android:pathData="M38,40A16,16 0,0 1,70 40L70,68A16,16 0,0 1,38 68Z" />
+    <path
+        android:fillColor="#3B2DA6"
+        android:pathData="M43,44a11,11 0,1 0,22 0a11,11 0,1 0,-22 0Z" />
+    <path
+        android:fillColor="#FF8A65"
+        android:pathData="M49.5,44a4.5,4.5 0,1 0,9 0a4.5,4.5 0,1 0,-9 0Z" />
+    <path
+        android:fillColor="#B7BCF5"
+        android:pathData="M49,61h10a2,2 0,0 1,0 4h-10a2,2 0,0 1,0 -4ZM49,69h10a2,2 0,0 1,0 4h-10a2,2 0,0 1,0 -4Z" />
+</vector>

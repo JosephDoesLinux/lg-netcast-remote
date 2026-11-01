@@ -1,0 +1,5 @@
+HSPLdev/netcastremote/MainActivity;
+HSPLdev/netcastremote/NetCastApp;
+HSPLdev/netcastremote/ui/ScreensKt;
+HSPLdev/netcastremote/session/TvRepository;
+PLdev/netcastremote/session/NetCastService;
