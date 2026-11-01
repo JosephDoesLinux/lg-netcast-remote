@@ -21,3 +21,15 @@
 -keep class * implements androidx.glance.appwidget.action.ActionCallback {
     <init>();
 }
+
+# WorkManager 2.7 (from Glance) predates R8 full mode, so its own rules miss the classes it creates by reflection:
+# Room's generated database, the workers Glance schedules for widget updates, and the input merger.
+-keep class * extends androidx.room.RoomDatabase {
+    <init>();
+}
+-keep class * extends androidx.work.ListenableWorker {
+    <init>(android.content.Context, androidx.work.WorkerParameters);
+}
+-keep class * extends androidx.work.InputMerger {
+    <init>();
+}

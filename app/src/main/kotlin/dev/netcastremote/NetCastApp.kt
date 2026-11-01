@@ -10,6 +10,7 @@ import dev.netcastremote.widget.FavoriteChannelsWidget
 import dev.netcastremote.widget.NowPlayingWidget
 import dev.netcastremote.widget.PreviewWidget
 import dev.netcastremote.widget.TransportWidget
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,7 +24,9 @@ class NetCastApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        // A remote shouldn't crash over one failed network call; log it and carry on.
+        val logged = CoroutineExceptionHandler { _, error -> android.util.Log.e("NetCast", "Unhandled error in a background task", error) }
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate + logged)
         repository = TvRepository(dev.netcastremote.session.AndroidPlatform(this), scope)
         SessionRuntime.repository = repository
         NetCastService.ensureChannels(getSystemService(NotificationManager::class.java))

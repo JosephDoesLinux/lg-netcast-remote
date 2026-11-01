@@ -2,7 +2,10 @@
 
 package dev.netcastremote.ui
 
+import android.Manifest
 import androidx.activity.compose.PredictiveBackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -228,6 +231,10 @@ fun NetCastRoot(repo: TvRepository, state: UiState) {
     }
     val live = state.link == LinkState.Online || state.link == LinkState.Demo
     val version = remember { runCatching { context.packageManager.getPackageInfo(context.packageName, 0).versionName }.getOrNull().orEmpty() }
+    // The tour's Find my TV asks for Wi-Fi discovery and Android 17's local network access before it searches,
+    // as the search screen does. The search runs either way; without access it explains instead of finding nothing.
+    val askThenSearch = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { repo.finishOnboarding(demo = false) }
+    val searchPermissions = remember { listOfNotNull(Manifest.permission.NEARBY_WIFI_DEVICES, localNetworkPermission).toTypedArray() }
 
     CompositionLocalProvider(LocalKeyClick provides state.settings.keyClick) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
@@ -278,7 +285,7 @@ fun NetCastRoot(repo: TvRepository, state: UiState) {
                                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
                                     Box(Modifier.widthIn(max = maxWidthOf(screen)).fillMaxSize()) {
                                         when (screen) {
-                                            Screen.Welcome -> WelcomePane(repo, androidFeatures, device = "phone")
+                                            Screen.Welcome -> WelcomePane(repo, androidFeatures, device = "phone", onFindTv = { askThenSearch.launch(searchPermissions) })
                                             Screen.Discover -> DiscoverPane(repo, state)
                                             Screen.About -> AboutPane(version)
                                             Screen.Remote -> RemotePane(repo, state, onPower = { power = true })

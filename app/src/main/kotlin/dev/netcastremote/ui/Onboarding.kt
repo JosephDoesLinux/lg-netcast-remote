@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -89,11 +88,17 @@ private const val PAGES = 4
  * It ends in a search for the TV, or in the demo TV for a look around.
  */
 @Composable
-fun WelcomePane(repo: TvRepository, features: List<Feature>, device: String, modifier: Modifier = Modifier) {
+fun WelcomePane(
+    repo: TvRepository,
+    features: List<Feature>,
+    device: String,
+    modifier: Modifier = Modifier,
+    onFindTv: () -> Unit = { repo.finishOnboarding(demo = false) },
+) {
     val pager = rememberPagerState { PAGES }
     val scope = rememberCoroutineScope()
     val last = pager.currentPage == PAGES - 1
-    Column(modifier.fillMaxSize().safeDrawingPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), horizontalArrangement = Arrangement.End) {
             TextButton(onClick = { scope.launch { pager.animateScrollToPage(PAGES - 1) } }, enabled = !last) { Text(if (last) "" else "Skip") }
         }
@@ -127,7 +132,7 @@ fun WelcomePane(repo: TvRepository, features: List<Feature>, device: String, mod
             PageDots(pager.currentPage)
             if (last) {
                 Button(
-                    onClick = { repo.finishOnboarding(demo = false) },
+                    onClick = onFindTv,
                     shapes = ButtonDefaults.shapes(),
                     modifier = Modifier.fillMaxWidth().heightIn(min = ButtonDefaults.MediumContainerHeight),
                     contentPadding = ButtonDefaults.contentPaddingFor(ButtonDefaults.MediumContainerHeight),

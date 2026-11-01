@@ -164,7 +164,18 @@ class TvRepository(
             _state.update { it.copy(searching = true, link = LinkState.Searching, screen = Screen.Discover) }
             val lock = multicast()
             try {
-                val notices = searchLan()
+                // Android refuses the send (EPERM) until local network access is allowed; that's a state, not a crash.
+                val notices = runCatching { searchLan() }.getOrElse { error ->
+                    log("search failed: ${error.javaClass.simpleName} ${error.message.orEmpty()}")
+                    _state.update {
+                        it.copy(
+                            searching = false,
+                            link = LinkState.Isolated,
+                            message = "Couldn't search the network. Allow access to devices on your network, then search again.",
+                        )
+                    }
+                    return@launch
+                }
                 val cards = notices.mapNotNull { describe(it) }.distinctBy { it.id }
                 val onlyWebOs = cards.isNotEmpty() && cards.all { it.webOs }
                 _state.update {

@@ -28,6 +28,7 @@ import dev.netcastremote.session.TvRepository
 import dev.netcastremote.ui.NetCastRoot
 import dev.netcastremote.ui.NetCastTheme
 import dev.netcastremote.ui.decodeImage
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -44,7 +45,8 @@ fun main() {
 }
 
 private fun app(platform: DesktopPlatform) = application {
-    val scope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
+    // A remote shouldn't crash over one failed network call; log it and carry on.
+    val scope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main + CoroutineExceptionHandler { _, error -> platform.log("Unhandled error: $error") }) }
     val repo = remember { TvRepository(platform, scope).also { it.start() } }
     val state by repo.state.collectAsState()
     val windowState = rememberWindowState(size = DpSize(1180.dp, 820.dp), position = WindowPosition(Alignment.Center))
